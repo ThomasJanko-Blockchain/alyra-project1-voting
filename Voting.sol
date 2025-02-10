@@ -82,6 +82,12 @@ contract Voting is Ownable(msg.sender) {
         changeWorkflowStatus(WorkflowStatus.VotingSessionStarted);
     }
 
+    //Fonction pour voir une proposition
+    function getProposal(uint _id) external view returns (Proposal memory) {
+        require(_id < proposals.length, "Invalid proposal ID");
+        return proposals[_id];
+    }
+
     // Fonction pour voter (Seulement les électeurs enregistrés)
     function vote(uint _proposalId) external onlyDuringWorkflow(WorkflowStatus.VotingSessionStarted) {
         require(voters[msg.sender].isRegistered, "Only registered voters can vote");
